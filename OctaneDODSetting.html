@@ -3,19 +3,30 @@
 
     <body>
 
+        <h2> Define your DoD logic: </h2>
 
-        <form id="dodForm">
 
+        <form id="dodForm" action="http://127.0.0.1:8081/setDoDLogic" method="POST">
 
-            <span> Insert you DoD Rule</apn>
+            <span>Move Feature from New to In Progress when:</span>
+            <br>
+            <input type="radio" name="moveToInProgress" value="any" checked> At least one user story is in progress <br>
+            <input type="radio" name="moveToInProgress" value="all" checked> All user stories is in progress <br>
+            <br>
+
+            <span> Move Feature from In Progress To Done when</apn>
+
+            <br>
             
-            <input type="text" id="dodRule" />
+            <textarea  name="dodLogic" rows="10" cols="50">
+                
+            </textarea>
+
+            <br>
+
+            <input type="submit" value="Submit">
 
         </form>
-
-
-aaa
-
 
     </body>
 
