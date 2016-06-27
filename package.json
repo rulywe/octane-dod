@@ -1,0 +1,22 @@
+{
+  "name": "dod",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "cookie": "0.2.3",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.14.0",
+    "multer": "^1.1.0",
+    "request": "^2.72.0",
+    "request-debug": "0.2.0"
+  },
+  "description": "This project demonstrates the following flows:",
+  "main": "app.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ruly weisbach",
+  "license": "ISC"
+}
