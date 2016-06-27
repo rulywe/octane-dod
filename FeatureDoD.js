@@ -17,19 +17,43 @@ var FeatureDoD = function (requestor, callback, logic) {
     this.feature = {};
 }
 
+FeatureDoD.prototype.updateFeature = function(){
+
+    var comment = this.feature.isDoD ? "Feature is done based on DoD logic: "+this.logic : "Feature is not done based on DoD logic: "+this.logic;
+
+    this.requestor.get('/work_items/' + this.feature.id, function (error, message, feature) {
+
+        //Get the feature ID
+        console.log(feature);
+        //console.log("USER STORY FEATURE ID: "+userStory.parent.id);
+        //instance.getFeature(userStory.parent.id);
+    });
+
+    var phaseId =  this.feature.isDoD == 1 ? 2133 : 2131;
+
+    console.log("UPDATING FEATURE ID: "+this.feature.id+" , PHASE ID: "+phaseId);
+
+    this.requestor({url: '/work_items/' + this.feature.id, method: 'PUT',json: {phase: { type: 'phase', id: phaseId }},function(error, message, response) {
+        
+            console.log("Error: "+error+" , message: "+message+" , response: "+response);
+    }});
+
+
+
+}
+
 
 FeatureDoD.prototype.getFeature = function (featureId) {
 
-    var feature = this.feature;
-    var callback = this.callback;
-    var logic = this.logic;
+    var that = this;
+    var feature = that.feature;
 
-    feature.id = featureId;
+    that.feature.id = featureId;
 
-    feature.userStories = { count: 0, inProgress: 0, inTesting: 0, done: 0 };
-    feature.defects = { count: 0, medium: 0, regression: 0, high: 0, critical: 0 };
+    that.feature.userStories = { count: 0, inProgress: 0, inTesting: 0, done: 0 };
+    that.feature.defects = { count: 0, medium: 0, regression: 0, high: 0, critical: 0 };
 
-    this.requestor.get('/work_items?query="parent EQ {id EQ ' + featureId + '}"', function (error, message, workItems) {
+    that.requestor.get('/work_items?query="parent EQ {id EQ ' + featureId + '}"', function (error, message, workItems) {
 
 
         // Go over all the user stories and defect and set the numbers of the important metrics that we will use to define of the feature is done 
@@ -68,7 +92,7 @@ FeatureDoD.prototype.getFeature = function (featureId) {
         var isDoD = false;
 
         try {
-            isDoD = eval(logic);
+            isDoD = eval(that.logic);
         } catch (e) {
             console.log(e);
         }
@@ -76,10 +100,14 @@ FeatureDoD.prototype.getFeature = function (featureId) {
         console.log("Feature DOD: " + isDoD);
 
         feature.isDoD = isDoD;
+        
+        that.updateFeature();
+
+       
 
         console.log(feature);
 
-        callback(feature);
+        that.callback(feature);
 
     });
 }
@@ -93,7 +121,7 @@ FeatureDoD.prototype.applyUserStoryDone = function (userStoryId) {
     this.requestor.get('/work_items/' + userStoryId, function (error, message, userStory) {
 
         //Get the feature ID
-        console.log(userStory);
+        //console.log(userStory);
         //console.log("USER STORY FEATURE ID: "+userStory.parent.id);
         instance.getFeature(userStory.parent.id);
     });

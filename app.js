@@ -21,7 +21,7 @@ var requestor = request.defaults({
 });
 
 
-var DOD_LOGIC = 'feature.defects.high == 0 feature.defects.critical == 0 & feature.defects.medium < 5';
+var DOD_LOGIC = 'feature.defects.high == 0 & feature.defects.critical == 0 & feature.defects.medium < 5';
 
 
 
@@ -97,16 +97,36 @@ app.post('/setDoDLogic', urlencodedParser, function (req, res) {
 });
 
 app.get('/applyDoD', function (req, res) {
-	
-	console.log("Received User Story ID: "+req.query.userStoryId)
 
+  console.log(req.baseUrl);
+	
+	//console.log("Received User Story ID: "+req.query.userStoryId)
+  
 	initFeatureDoD(requestor, req.query.userStoryId, function(feature){
 		res.send(feature);
 	} );
 	
+});
+
+app.get('/applyDoDCall', function (req, res) {
+
+  console.log(req.baseUrl);
+	
+	//console.log("Received User Story ID: "+req.query.userStoryId)
+  
+  /*
+	initFeatureDoD(requestor, req.query.userStoryId, function(feature){
+		res.send(feature);
+	} );
+  */
+	
+});
+
+app.get('/dodSetting.html', function (req, res) {
+   res.sendFile( __dirname+'/OctaneDODSetting.html' );
 })
 
-var server = app.listen(8081, function () {
+var server = app.listen(3333, function () {
 
   var host = server.address().address
   var port = server.address().port
