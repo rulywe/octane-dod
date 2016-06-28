@@ -115,6 +115,8 @@ app.post('/dodcall', urlencodedParser, function (req, res) {
   //var workItemId = req.body.entityId;
 
   console.log(req.body);
+  console.log(req.query);
+  console.log(req);
 /*
   	initFeatureDoD(requestor, req.query.userStoryId, function(feature){
 		res.send(feature);
