@@ -112,16 +112,16 @@ app.post('/dodcall', urlencodedParser, function (req, res) {
 
   //console.log(req.baseUrl);
 
-  //var workItemId = req.body.entityId;
+  var workItemId = 3203;
 
   console.log(req.body);
-  console.log(req.query);
-  console.log(req);
-/*
-  	initFeatureDoD(requestor, req.query.userStoryId, function(feature){
+  
+  if (req.body.entityId){ var workItemId = req.body.entityId };
+
+  initFeatureDoD(requestor, workItemId, function(feature){
 		res.send(feature);
 	} );
-  */
+  
 	
 	
 	//console.log("Received User Story ID: "+req.query.userStoryId)
