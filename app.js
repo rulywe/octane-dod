@@ -17,7 +17,7 @@ var requestor = request.defaults({
     baseUrl: OCTANE_SERVER,
     json: true,
     // if running from within HPE you will need to set a proxy.  Change according to nearest proxy
-    proxy: 'http://web-proxy.il.hpecorp.net:8080'
+    //proxy: 'http://web-proxy.il.hpecorp.net:8080'
 });
 
 
@@ -84,7 +84,7 @@ function initFeatureDoD(requestor, userStoryId, callback) {
 // Create application/x-www-form-urlencoded parser
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
-app.post('/setDoDLogic', urlencodedParser, function (req, res) {
+app.post('/setdodlogic', urlencodedParser, function (req, res) {
 
   var dodLogic = req.body.dodLogic;
 
@@ -96,7 +96,7 @@ app.post('/setDoDLogic', urlencodedParser, function (req, res) {
 
 });
 
-app.get('/applyDoD', function (req, res) {
+app.get('/dodtest', function (req, res) {
 
   console.log(req.baseUrl);
 	
@@ -108,7 +108,7 @@ app.get('/applyDoD', function (req, res) {
 	
 });
 
-app.get('/applyDoDCall', function (req, res) {
+app.get('/dodcall', function (req, res) {
 
   console.log(req.baseUrl);
 	
@@ -122,7 +122,7 @@ app.get('/applyDoDCall', function (req, res) {
 	
 });
 
-app.get('/dodSetting.html', function (req, res) {
+app.get('/dodsetting', function (req, res) {
    res.sendFile( __dirname+'/OctaneDODSetting.html' );
 })
 
