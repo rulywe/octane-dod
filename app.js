@@ -21,7 +21,7 @@ var requestor = request.defaults({
 });
 
 
-var DOD_LOGIC = 'feature.defects.high == 0 & feature.defects.critical == 0 & feature.defects.medium < 5';
+var DOD_LOGIC = 'Total_Stories == Done_Stories & Total_Defects == 0';
 
 
 
@@ -38,15 +38,15 @@ function initFeatureDoD(requestor, userStoryId, callback) {
   requestor.post({
     uri: '/authentication/sign_in',
     body: {
-      //user: 'hackathon@user',
-      //password: 'Mission-impossible'
+      user: 'ruly@hpe.com',
+      password: 'Yoav0705'
       /**
        * alternatively you can use API key like this
        * client_id: '', // put API KEY here
        * client_secret: '' // PUT API SECRET HERE
        */
-	   client_id: 'Ruly_glxzd4wnj7r42aq423lgemv4j', // put API KEY here
-       client_secret: '-b04ebe67efbe882B' // PUT API SECRET HERE
+	  // client_id: 'Ruly_glxzd4wnj7r42aq423lgemv4j', // put API KEY here
+     //  client_secret: '-b04ebe67efbe882B' // PUT API SECRET HERE
     }
   }, function (error, response) {
     if (error) {

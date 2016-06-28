@@ -29,7 +29,7 @@ FeatureDoD.prototype.updateFeature = function(){
         //instance.getFeature(userStory.parent.id);
     });
 
-    var phaseId =  this.feature.isDoD == 1 ? 2133 : 2131;
+    var phaseId =  this.feature.isDoD == 1 ? 3030 : 3028;
 
     console.log("UPDATING FEATURE ID: "+this.feature.id+" , PHASE ID: "+phaseId);
 
@@ -53,6 +53,8 @@ FeatureDoD.prototype.getFeature = function (featureId) {
     that.feature.userStories = { count: 0, inProgress: 0, inTesting: 0, done: 0 };
     that.feature.defects = { count: 0, medium: 0, regression: 0, high: 0, critical: 0 };
 
+    
+
     that.requestor.get('/work_items?query="parent EQ {id EQ ' + featureId + '}"', function (error, message, workItems) {
 
 
@@ -66,17 +68,17 @@ FeatureDoD.prototype.getFeature = function (featureId) {
 
                 //console.log("User story phase: "+ workItem.phase.id)
 
-                switch (workItem.phase.id) { case 2136: feature.userStories.inTesting++; break; case 2137: feature.userStories.done++; break; default: feature.userStories.inProgress++; }
+                switch (workItem.phase.id) { case 3033: feature.userStories.inTesting++; break; case 3034: feature.userStories.done++; break; default: feature.userStories.inProgress++; }
 
                 //	for defect we need to know both sevirity and phase 			
             } else {
 
                 // If this is an open defect (based on the phases fix table above)
-                if (workItem.phase.id == 2114 || workItem.phase.id == 2113) {
+                if (workItem.phase.id == 3010 || workItem.phase.id == 3011) {
 
                     feature.defects.count++;
 
-                    switch (workItem.severity.id) { case 2354: feature.defects.medium++; break; case 2355: feature.defects.medium++; break; case 2356: feature.defects.high++; break; default: feature.defects.critical++ }
+                    switch (workItem.severity.id) { case 5170: feature.defects.medium++; break; case 5171: feature.defects.medium++; break; case 5172: feature.defects.high++; break; default: feature.defects.critical++ }
 
                     if (workItem.regression) { feature.defects.regression++; }
 
@@ -87,7 +89,15 @@ FeatureDoD.prototype.getFeature = function (featureId) {
 
         });
 
-
+        var Total_Stories = feature.userStories.count;
+        var InProgress_Stories = feature.userStories.inProgress
+        var InTesting_Stories = feature.userStories.inTesting;
+        var Done_Stories = feature.userStories.done;
+        var Total_Defects = feature.defects.count;
+        var Medium_Defects = feature.defects.medium;
+        var High_Defects = feature.defects.high;
+        var Critical_Defects = feature.defects.critical;
+        var Regression_Defects = feature.defects.regression;
 
         var isDoD = false;
 
@@ -100,7 +110,7 @@ FeatureDoD.prototype.getFeature = function (featureId) {
         console.log("Feature DOD: " + isDoD);
 
         feature.isDoD = isDoD;
-        
+
         that.updateFeature();
 
        
@@ -113,6 +123,9 @@ FeatureDoD.prototype.getFeature = function (featureId) {
 }
 
 FeatureDoD.prototype.applyUserStoryDone = function (userStoryId) {
+
+
+   
 
     var instance = this;
 
@@ -145,18 +158,18 @@ FeatureDoD.prototype.applyUserStoryDone = function (userStoryId) {
 	console.log(phasesMap);	
 });		 */
 
-var phases = [{ entity: 'defect', id: 2113, name: 'New' },
-    { entity: 'story', id: 2134, name: 'New' },
-    { entity: 'defect', id: 2114, name: 'Opened' },
-    { entity: 'story', id: 2135, name: 'In Progress' },
-    { entity: 'defect', id: 2115, name: 'Fixed' },
-    { entity: 'story', id: 2136, name: 'In Testing' },
-    { entity: 'defect', id: 2117, name: 'Proposed Closed' },
-    { entity: 'story', id: 2137, name: 'Done' },
-    { entity: 'defect', id: 2116, name: 'Closed' },
-    { entity: 'defect', id: 2118, name: 'Deferred' },
-    { entity: 'defect', id: 2119, name: 'Duplicate' },
-    { entity: 'defect', id: 2120, name: 'Rejected' }];
+var phases = [ { entity: 'defect', id: 3010, name: 'New' },
+  { entity: 'story', id: 3031, name: 'New' },
+  { entity: 'defect', id: 3011, name: 'Opened' },
+  { entity: 'story', id: 3032, name: 'In Progress' },
+  { entity: 'defect', id: 3012, name: 'Fixed' },
+  { entity: 'story', id: 3033, name: 'In Testing' },
+  { entity: 'defect', id: 3014, name: 'Proposed Closed' },
+  { entity: 'story', id: 3034, name: 'Done' },
+  { entity: 'defect', id: 3013, name: 'Closed' },
+  { entity: 'defect', id: 3015, name: 'Deferred' },
+  { entity: 'defect', id: 3016, name: 'Duplicate' },
+  { entity: 'defect', id: 3017, name: 'Rejected' } ]
 
 /* requestor.get('/list_nodes/', function (error, message, values) {
 		

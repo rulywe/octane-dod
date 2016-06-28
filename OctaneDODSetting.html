@@ -1,162 +1,225 @@
-
 <html>
 <style type="text/css">
-.form-style-5{
-    max-width: 650px;
-    padding: 10px 20px;
-    background: #f4f7f8;
-    margin: 10px auto;
-    padding: 20px;
-    background: #f4f7f8;
-    border-radius: 8px;
-    font-family: Georgia, "Times New Roman", Times, serif;
-}
-.form-style-5 fieldset{
-    border: none;
-}
-.form-style-5 legend {
-    font-size: 1.4em;
-    margin-bottom: 10px;
-}
-.form-style-5 label {
-    display: block;
-    margin-bottom: 8px;
-}
-.form-style-5 input[type="text"],
-.form-style-5 input[type="date"],
-.form-style-5 input[type="datetime"],
-.form-style-5 input[type="email"],
-.form-style-5 input[type="number"],
-.form-style-5 input[type="search"],
-.form-style-5 input[type="time"],
-.form-style-5 input[type="url"],
-.form-style-5 textarea,
-.form-style-5 select {
-    font-family: Georgia, "Times New Roman", Times, serif;
-    background: rgba(255,255,255,.1);
-    border: none;
-    border-radius: 4px;
-    font-size: 16px;
-    margin: 0;
-    outline: 0;
-    padding: 7px;
-    width: 100%;
-    box-sizing: border-box; 
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box; 
-    background-color: #e8eeef;
-    color:#8a97a0;
-    -webkit-box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
-    box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
-    margin-bottom: 30px;
+    .form-style-5 {
+        max-width: 650px;
+        padding: 10px 20px;
+        background: #f4f7f8;
+        margin: 10px auto;
+        padding: 20px;
+        background: #f4f7f8;
+        border-radius: 8px;
+        font-family: Georgia, "Times New Roman", Times, serif;
+    }
     
-}
-.form-style-5 input[type="text"]:focus,
-.form-style-5 input[type="date"]:focus,
-.form-style-5 input[type="datetime"]:focus,
-.form-style-5 input[type="email"]:focus,
-.form-style-5 input[type="number"]:focus,
-.form-style-5 input[type="search"]:focus,
-.form-style-5 input[type="time"]:focus,
-.form-style-5 input[type="url"]:focus,
-.form-style-5 textarea:focus,
-.form-style-5 select:focus{
-    background: #d2d9dd;
-}
-.form-style-5 select{
-    -webkit-appearance: menulist-button;
-    height:35px;
-}
-.form-style-5 .number {
-    background: #1abc9c;
-    color: #fff;
-    height: 30px;
-    width: 30px;
-    display: inline-block;
-    font-size: 0.8em;
-    margin-right: 4px;
-    line-height: 30px;
-    text-align: center;
-    text-shadow: 0 1px 0 rgba(255,255,255,0.2);
-    border-radius: 15px 15px 15px 0px;
-}
-
-.form-style-5 input[type="submit"],
-.form-style-5 input[type="button"]
-{
-    position: relative;
-    display: block;
-    padding: 19px 39px 18px 39px;
-    color: #FFF;
-    margin: 0 auto;
-    background: #1abc9c;
-    font-size: 18px;
-    text-align: center;
-    font-style: normal;
-    width: 100%;
-    border: 1px solid #16a085;
-    border-width: 1px 1px 3px;
-    margin-bottom: 10px;
-}
-.form-style-5 input[type="submit"]:hover,
-.form-style-5 input[type="button"]:hover
-{
-    background: #109177;
-}
+    .form-style-5 fieldset {
+        border: none;
+    }
+    
+    .form-style-5 legend {
+        font-size: 1.4em;
+        margin-bottom: 10px;
+    }
+    
+    .form-style-5 label {
+        display: block;
+        margin-bottom: 8px;
+    }
+    
+    .form-style-5 input[type="text"],
+    .form-style-5 input[type="date"],
+    .form-style-5 input[type="datetime"],
+    .form-style-5 input[type="email"],
+    .form-style-5 input[type="number"],
+    .form-style-5 input[type="search"],
+    .form-style-5 input[type="time"],
+    .form-style-5 input[type="url"],
+    .form-style-5 textarea,
+    .form-style-5 select {
+        font-family: Georgia, "Times New Roman", Times, serif;
+        background: rgba(255, 255, 255, .1);
+        border: none;
+        border-radius: 4px;
+        font-size: 16px;
+        margin: 0;
+        outline: 0;
+        padding: 7px;
+        width: 100%;
+        box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        background-color: #e8eeef;
+        color: #8a97a0;
+        -webkit-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.03) inset;
+        box-shadow: 0 1px 0 rgba(0, 0, 0, 0.03) inset;
+        margin-bottom: 30px;
+    }
+    
+    .form-style-5 input[type="text"]:focus,
+    .form-style-5 input[type="date"]:focus,
+    .form-style-5 input[type="datetime"]:focus,
+    .form-style-5 input[type="email"]:focus,
+    .form-style-5 input[type="number"]:focus,
+    .form-style-5 input[type="search"]:focus,
+    .form-style-5 input[type="time"]:focus,
+    .form-style-5 input[type="url"]:focus,
+    .form-style-5 textarea:focus,
+    .form-style-5 select:focus {
+        background: #d2d9dd;
+    }
+    
+    .form-style-5 select {
+        -webkit-appearance: menulist-button;
+        height: 35px;
+    }
+    
+    .form-style-5 .number {
+        background: #1abc9c;
+        color: #fff;
+        height: 30px;
+        width: 30px;
+        display: inline-block;
+        font-size: 0.8em;
+        margin-right: 4px;
+        line-height: 30px;
+        text-align: center;
+        text-shadow: 0 1px 0 rgba(255, 255, 255, 0.2);
+        border-radius: 15px 15px 15px 0px;
+    }
+    
+    .form-style-5 input[type="submit"],
+    .form-style-5 input[type="button"] {
+        position: relative;
+        display: block;
+        padding: 19px 39px 18px 39px;
+        color: #FFF;
+        margin: 0 auto;
+        background: #1abc9c;
+        font-size: 18px;
+        text-align: center;
+        font-style: normal;
+        width: 100%;
+        border: 1px solid #16a085;
+        border-width: 1px 1px 3px;
+        margin-bottom: 10px;
+    }
+    
+    .form-style-5 input[type="submit"]:hover,
+    .form-style-5 input[type="button"]:hover {
+        background: #109177;
+    }
 </style>
 
 
-    <body>
+<body>
+   <!-- <img src="login-top-left.png" style="position:absolute;top:0px;left:0px;">
+    <img src="login-right.png" style="position:absolute;top:0px;right:0px;">
+    <img src="login-bottom-left.png" style="position:absolute;bottom:0px;left:0px;"> -->
 
 
-<div class="form-style-5">
+    <div class="form-style-5">
 
         <form id="dodForm" action="/setdodlogic" method="POST">
 
-<fieldset>
-<legend><span class="number">1</span> Definition of In Progress</legend>
-<label for="job">Move Features from New to In-Progress when:</label>
+            <fieldset>
+                <legend><span class="number">1</span> Definition of In Progress</legend>
+                <label for="job">Move Features from New to In-Progress when:</label>
 
 
-            <br>
-            <input type="radio" name="moveToInProgress" value="any" checked> At least one user story is in progress<br>
-            <input type="radio" name="moveToInProgress" value="all" checked> All user stories are in progress <br>
-            <br>
-
-<legend><span class="number">2</span>Definition of Done</legend>
-
-            <br>
-
-            <div style="text:italic">
-                To define feature DoD build any boolean sentence using the variables:
-                <br><br>
-                
-                <i>feature.userStories.count, feature.userStories.inProgress, feature.userStories.inTesting, feature.userStories.done
                 <br>
-                feature.defects.count, feature.defects.medium, feature.defects.high, feature.defects.critical, feature.defects.regression</i>
+                <input type="radio" name="moveToInProgress" value="any" checked> At least one user story is in progress<br>
+                <input type="radio" name="moveToInProgress" value="all" checked> All user stories are in progress <br>
                 <br>
-                <br>
-                For example to set DoD where Feature is done only when all users stories are done and no critical or regression defects and all other defects are no more than 5:
-                <br><br>
-                <i>feature.userStories.count == feature.userStories.done & feature.defects.critical == 0 & feature.defects.regression == 0 & (feature.defects.medium + feature.defects.high) <=5</i>
-            </div>
 
-            <br>
+                <legend><span class="number">2</span>Definition of Done</legend>
 
-            
-            <textarea  name="dodLogic" rows="5" cols="50">
-                
-            </textarea>
+                <div style="text:italic">
+                    <Select a pre-set Definition of Done: <select id="Presets" name="field4" onchange="SetPreset()">
+		<option value="9">Select a pre-set Definition of Done</option>
+		<option value="0">All Stories are Done</option>
+		<option value="1">All Stories are Done and No Defects</option>
+		<option value="2">All Stories are Done and No Critical Defects</option>
+		<option value="3">All Stories are Done and No Critical or Regression Defects</option>
+		<option value="4">All Stories are Done, No Critical or Regression Defects and No more than 5 Opened Defects</option>
+		</select>
+                    <br>
+                    <div style="text:italic">
+                        Or define any boolean sentence using the following variables and operators:
+                        <select id="VarsOps" name="field4" onchange="AppendVar()">
+		<optgroup label="Variables">
+		<option value="Total_Stories">Total_Stories</option>
+		<option value="InProgress_Stories">InProgress_Stories</option>
+		<option value="InTesting_Stories">InTesting_Stories</option>
+		<option value="Done_Stories">Done_Stories</option>
+		<option value="Total_Defects">Total_Defects</option>
+		<option value="Medium_Defects">Medium_Defects</option>
+		<option value="High_Defects">High_Defects</option>
+		<option value="Critical_Defects">Critical_Defects</option>
+		<option value="Regression_Defects">Regression_Defects</option>
+		</optgroup>
+		<optgroup label="Operators">
+		<option value=" == ">Equals</option>
+		<option value=" > ">Greater than</option>
+		<option value=" < ">Smaller than</option>
+		<option value=" & ">And</option>
+		<option value=" || ">Or</option>
+		<option value=" + ">Plus</option>
+		</optgroup>
+		</select>
+                    </div>
 
-            <br>
+                    <br>
 
-            <input type="submit" value="Submit">
+                    <textarea id="logicplain" name="dodLogic" rows="5" cols="50"></textarea>
+
+
+                    <textarea id="logictext" name="dodLogic_2" rows="5" cols="50" style="display:none;"></textarea>
+
+                    <br>
+
+                    <input type="button" onclick="dosubmit()" value="Submit">
 
         </form>
-</div>
+
+        <script type="text/javascript">
+
+var plainAttrs = ["Total_Stories","InProgress_Stories","InTesting_Stories","Done_Stories","Total_Defects","Medium_Defects","High_Defects","Critical_Defects","Regression_Defects"];  
+var actualAttrs = ["feature.userStories.count","feature.userStories.inProgress","feature.userStories.inTesting","feature.userStories.done","feature.defects.count","feature.defects.medium","feature.defects.high","feature.defects.critical","feature.defects.regression"];  
+
+var presetsstrings = ["Total_Stories == Done_Stories","Total_Stories == Done_Stories & Total_Defects == 0","Total_Stories == Done_Stories & Critical_Defects == 0","Total_Stories == Done_Stories & Critical_Defects == 0 & Regression_Defects == 0",
+"Total_Stories == DoneStories & Critical_Defects == 0 & Regression_Defects == 0 & (Medium_Defects + High_Defects) <=5"]
+
+function SetPreset()
+{
+
+	if (document.getElementById("Presets").value<9){  	
+	document.getElementById("logicplain").value=presetsstrings[document.getElementById("Presets").value];
+}
+}
+
+
+function AppendVar()
+{
+	document.getElementById("logicplain").value=document.getElementById("logicplain").value +" "+ document.getElementById("VarsOps").value;
+}
+
+function dosubmit()
+
+{
+	////document.getElementById("logictext").value = document.getElementById("logicplain").value;
+	//for (i = 0;i<plainAttrs.length;i++){
+	//alert (actualAttrs[i]);
+	//document.getElementById("logictext").value = document.getElementById("logictext").value.replace(plainAttrs[i],actualAttrs[i]);
+
+	//}
+
+
+//	alert("o");
+	document.forms['dodForm'].submit();
+}
+</script></div>
 
 
 
-    </body>
+</body>
 
 </html>
