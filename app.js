@@ -9,7 +9,7 @@ var app = express();
 
 const OCTANE_SERVER = 'https://hackathon.almoctane.com';
 const SHAREDSPACE_ID = 1001;
-const WORKSPACE_ID = 2005;
+const WORKSPACE_ID = 2037;
 
 // create the cookie jar that is needed for authentication
 var requestor = request.defaults({
@@ -108,9 +108,18 @@ app.get('/dodtest', function (req, res) {
 	
 });
 
-app.get('/dodcall', function (req, res) {
+app.post('/dodcall', urlencodedParser, function (req, res) {
 
-  console.log(req.baseUrl);
+  //console.log(req.baseUrl);
+
+  var workItemId = req.body.entityId;
+
+  console.log(req.body);
+
+  	initFeatureDoD(requestor, req.query.userStoryId, function(feature){
+		res.send(feature);
+	} );
+	
 	
 	//console.log("Received User Story ID: "+req.query.userStoryId)
   
