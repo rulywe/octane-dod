@@ -112,13 +112,19 @@ app.get('/progresstest', function (req, res) {
 
 });
 
-app.post('/dodcall', urlencodedParser, function (req, res) {
+app.post('/dodcall',  function (req, res) {
+
+  var body;
+  req.on('data', function (data) {
+    body += data;
+    
+  });
 
   var workItemId = 3203;
 
-  console.log(req.body);
+  console.log(body);
 
-  if (req.body.entityId) { var workItemId = req.body.entityId };
+  //if (req.body.entityId) { var workItemId = req.body.entityId };
 
   initFeatureDoD(requestor, workItemId, false, function (feature) {
     res.send(feature);
