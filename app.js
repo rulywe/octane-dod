@@ -120,7 +120,7 @@ app.post('/dodcall',  function (req, res) {
 
   req.on('data', function (data) {
 
-    
+
     body += data;
 
     console.log(body);    
@@ -130,7 +130,7 @@ app.post('/dodcall',  function (req, res) {
 
     workItemId = JSON.parse(body).entityId;
 
-    console,log("Received call URL for work item: "+workItemId)
+    console.log("Received call URL for work item: "+workItemId)
 
     initFeatureDoD(requestor, workItemId, false, function (feature) {
       res.send(feature);
