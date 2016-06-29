@@ -7,7 +7,7 @@ var featureDoDLib = require('./FeatureDoD');
 
 var app = express();
 
-app.use('/images', express.static(__dirname + '/public'));
+app.use('/static', express.static(__dirname + '/images'));
 
 const OCTANE_SERVER = 'https://hackathon.almoctane.com';
 const SHAREDSPACE_ID = 1001;
