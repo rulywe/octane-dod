@@ -175,18 +175,22 @@ FeatureDoD.prototype.applyUserStoryProgress = function (userStoryId){
             if ("any" == dodLogic.progressLogic){
 
                 feature.newPhase = feature.userStories.inProgress+feature.userStories.inTesting+feature.userStories.done > 0 ? FEATURE_INPROGRESS_PHASE : FEATURE_NEW_PHASE;
-                feature.comment = feature.newPhase == FEATURE_INPROGRESS_PHASE ? "DoD Ruler decided that the Feature is moving to In Progress phase because at least one user story is in Progress phase" : "DoD Ruler decided that the Feature is in New phase because all User stories are in New phase"
+                feature.comment = feature.newPhase == FEATURE_INPROGRESS_PHASE ? ANY_MOVE_TO_PROGRESS : ANY_MOVE_TO_NEW;
             } else {
 
                 feature.newPhase = feature.userStories.inNew == 0 ?  FEATURE_INPROGRESS_PHASE : FEATURE_NEW_PHASE;
-                feature.comment = feature.newPhase == FEATURE_INPROGRESS_PHASE ? "DoD Ruler decided that the Feature is moving to In Progress phase  because all  user stories are in In Progress phase" : "DoD Ruler decided that the Feature is in New phase because at least one User story is in New phase"
-
+                feature.comment = feature.newPhase == FEATURE_INPROGRESS_PHASE ? ALL_MOVE_TO_PROGRESS : ALL_MOVE_TO_NEW;
             }
         });
     });
 
 
 }
+
+const ANY_MOVE_TO_PROGRESS = "DoD bot decided that the Feature is moving to In Progress phase because at least one user story is in Progress phase";
+const ANY_MOVE_TO_NEW = "DoD bot decided that the Feature is in New phase because all user stories are in New phase";
+const ALL_MOVE_TO_PROGRESS = "DoD bot decided that the Feature is moving to In Progress phase  because all user stories are in In Progress phase";
+const ALL_MOVE_TO_NEW = "DoD bot decided that the Feature is in New phase because at least one User story is in New phase"
 
 
 // The phases mapping can be determined per workspace and the assumption that whoever define DoD logic is familiar with the phases

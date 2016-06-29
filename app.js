@@ -117,51 +117,24 @@ app.get('/progresstest', function (req, res) {
 
 app.post('/dodcall',  function (req, res) {
 
-  var body = "";
-
-  var workItemId = 3203;
-
-  req.on('data', function (data) {
-
-
-    body += data;
-
-    console.log(body);    
-  });
-
-  req.on('end', function () {
-
-    workItemId = JSON.parse(body).entityId;
-
-    console.log("Received call URL for work item: "+workItemId)
-
-    initFeatureDoD(requestor, workItemId, false, function (feature) {
-      res.send(feature);
-    });
-
-  });
-
-  
-
- 
-
-  //if (req.body.entityId) { var workItemId = req.body.entityId };
-
+  handleOctaneCall(req, res, false)
   
 });
 
-app.post('/progresscall', urlencodedParser, function (req, res) {
+app.post('/progresscall', function (req, res) {
+
+  handleOctaneCall(req, res, true) 
+});
+
+function handleOctaneCall(req, res, isInProgress) {
 
   var body = "";
 
   var workItemId = 3203;
 
   req.on('data', function (data) {
-
-
     body += data;
-
-    console.log(body);
+    console.log("Call URL data: "+body);
   });
 
   req.on('end', function () {
@@ -170,12 +143,12 @@ app.post('/progresscall', urlencodedParser, function (req, res) {
 
     console.log("Received call URL for work item: " + workItemId)
 
-    initFeatureDoD(requestor, workItemId, true, function (feature) {
+    initFeatureDoD(requestor, workItemId, isInProgress, function (feature) {
       res.send(feature);
     });
 
   });
-});
+}
 
 app.get('/dodsetting', function (req, res) {
   res.sendFile(__dirname + '/OctaneDODSetting.html');
