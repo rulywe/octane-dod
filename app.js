@@ -38,7 +38,7 @@ function initFeatureDoD(requestor, userStoryId, isProgress, callback) {
   requestor.post({
     uri: '/authentication/sign_in',
     body: {
-      user: 'ruly@hpe.com',
+      user: 'dod@nga.com',
       password: 'Yoav0705'
       /**
        * alternatively you can use API key like this
@@ -149,17 +149,29 @@ app.post('/dodcall',  function (req, res) {
 
 app.post('/progresscall', urlencodedParser, function (req, res) {
 
+  var body = "";
+
   var workItemId = 3203;
 
-  console.log(req.body);
+  req.on('data', function (data) {
 
-  if (req.body.entityId) { var workItemId = req.body.entityId };
 
-  initFeatureDoD(requestor, workItemId, true, function (feature) {
-    res.send(feature);
+    body += data;
+
+    console.log(body);
   });
 
+  req.on('end', function () {
 
+    workItemId = JSON.parse(body).entityId;
+
+    console.log("Received call URL for work item: " + workItemId)
+
+    initFeatureDoD(requestor, workItemId, true, function (feature) {
+      res.sendFile(__dirname + '/OctaneDODone.html');
+    });
+
+  });
 });
 
 app.get('/dodsetting', function (req, res) {
