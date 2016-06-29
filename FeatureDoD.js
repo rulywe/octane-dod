@@ -5,6 +5,10 @@ module.exports = {
 
 };
 
+const FEATURE_DONE_PHASE = 3030;
+const FEATURE_INPROGRESS_PHASE = 3028;
+const FEATURE_NEW_PHASE = 3027;
+
 
 var FeatureDoD = function (requestor, callback, logic) {
 
@@ -16,6 +20,9 @@ var FeatureDoD = function (requestor, callback, logic) {
 
     this.feature = {};
 }
+
+
+
 
 FeatureDoD.prototype.updateFeature = function(){
 
@@ -29,28 +36,42 @@ FeatureDoD.prototype.updateFeature = function(){
         //instance.getFeature(userStory.parent.id);
     });
 
-    var phaseId =  this.feature.isDoD == 1 ? 3030 : 3028;
+    
 
-    console.log("UPDATING FEATURE ID: "+this.feature.id+" , PHASE ID: "+phaseId);
+    console.log("UPDATING FEATURE ID: "+this.feature.id+" , PHASE ID: "+this.feature.newPhase);
 
-    this.requestor({url: '/work_items/' + this.feature.id, method: 'PUT',json: {phase: { type: 'phase', id: phaseId }},function(error, message, response) {
+    this.requestor({url: '/work_items/' + this.feature.id, method: 'PUT',json: {phase: { type: 'phase', id: this.feature.newPhase }},function(error, message, response) {
         
             console.log("Error: "+error+" , message: "+message+" , response: "+response);
     }});
 
+    var comment = {
+        "data": [{
+            "author": { "id": 2009, "type": "workspace_user" },
+            "text": "<html><body>"+this.feature.comment+"</body></html>",
+            "owner_work_item": { "id": this.feature.id, "type": "work_item" }
+        }]
+    };
+
+    this.requestor.post({ url: '/comments', body: comment }, function (error, message, comments) {
+        console.log('CREATED COMMENTS');
+        comments.data.forEach(function (retComment) {
+            console.log('id: ' + retComment.id);
+        });
+    });
 
 
 }
 
 
-FeatureDoD.prototype.getFeature = function (featureId) {
+FeatureDoD.prototype.getFeature = function (featureId, logicHandler) {
 
     var that = this;
     var feature = that.feature;
 
     that.feature.id = featureId;
 
-    that.feature.userStories = { count: 0, inProgress: 0, inTesting: 0, done: 0 };
+    that.feature.userStories = { count: 0, inNew:0, inProgress: 0, inTesting: 0, done: 0 };
     that.feature.defects = { count: 0, medium: 0, regression: 0, high: 0, critical: 0 };
 
     
@@ -68,7 +89,7 @@ FeatureDoD.prototype.getFeature = function (featureId) {
 
                 //console.log("User story phase: "+ workItem.phase.id)
 
-                switch (workItem.phase.id) { case 3033: feature.userStories.inTesting++; break; case 3034: feature.userStories.done++; break; default: feature.userStories.inProgress++; }
+                switch (workItem.phase.id) { case 3031: feature.userStories.inNew++;  break; case 3033: feature.userStories.inTesting++; break; case 3034: feature.userStories.done++; break; default: feature.userStories.inProgress++; }
 
                 //	for defect we need to know both sevirity and phase 			
             } else {
@@ -89,27 +110,7 @@ FeatureDoD.prototype.getFeature = function (featureId) {
 
         });
 
-        var Total_Stories = feature.userStories.count;
-        var InProgress_Stories = feature.userStories.inProgress
-        var InTesting_Stories = feature.userStories.inTesting;
-        var Done_Stories = feature.userStories.done;
-        var Total_Defects = feature.defects.count;
-        var Medium_Defects = feature.defects.medium;
-        var High_Defects = feature.defects.high;
-        var Critical_Defects = feature.defects.critical;
-        var Regression_Defects = feature.defects.regression;
-
-        var isDoD = false;
-
-        try {
-            isDoD = eval(that.logic);
-        } catch (e) {
-            console.log(e);
-        }
-
-        console.log("Feature DOD: " + isDoD);
-
-        feature.isDoD = isDoD;
+        logicHandler(feature, that.logic)
 
         that.updateFeature();
 
@@ -124,20 +125,67 @@ FeatureDoD.prototype.getFeature = function (featureId) {
 
 FeatureDoD.prototype.applyUserStoryDone = function (userStoryId) {
 
-
-   
-
     var instance = this;
 
     console.log("applyUserStoryDone received user story id: " + userStoryId);
 
     this.requestor.get('/work_items/' + userStoryId, function (error, message, userStory) {
 
-        //Get the feature ID
-        //console.log(userStory);
-        //console.log("USER STORY FEATURE ID: "+userStory.parent.id);
-        instance.getFeature(userStory.parent.id);
+        console.log("USER STORY FEATURE ID: "+userStory.parent.id);
+        instance.getFeature(userStory.parent.id, function(feature,dodLogic){
+
+            var Total_Stories = feature.userStories.count;
+            var InProgress_Stories = feature.userStories.inProgress + feature.userStories.inNew;
+            var InTesting_Stories = feature.userStories.inTesting;
+            var Done_Stories = feature.userStories.done;
+            var Total_Defects = feature.defects.count;
+            var Medium_Defects = feature.defects.medium;
+            var High_Defects = feature.defects.high;
+            var Critical_Defects = feature.defects.critical;
+            var Regression_Defects = feature.defects.regression;
+
+            var isDoD = false;
+
+            try {
+                isDoD = eval(dodLogic.doneLogic);
+            } catch (e) {
+                console.log(e);
+            }
+
+            console.log("Feature DOD: " + isDoD);
+
+            feature.isDoD = isDoD;
+            feature.comment =isDoD ? "DoD Ruler decided that the Feature is done based on the logic: " + dodLogic.doneLogic : "DoD Ruler decided that the Feature is not done based on the logic: " + dodLogic.doneLogic;
+
+            feature.newPhase =  feature.isDoD == 1 ? FEATURE_DONE_PHASE : FEATURE_INPROGRESS_PHASE;
+
+        });
     });
+}
+
+FeatureDoD.prototype.applyUserStoryProgress = function (userStoryId){
+
+    var that = this;
+
+    this.requestor.get('/work_items/' + userStoryId, function (error, message, userStory) {
+        
+        console.log("USER STORY FEATURE ID: "+userStory.parent.id);
+        that.getFeature(userStory.parent.id, function(feature,dodLogic){
+
+            if ("any" == dodLogic.progressLogic){
+
+                feature.newPhase = feature.userStories.inProgress+feature.userStories.inTesting+feature.userStories.done > 0 ? FEATURE_INPROGRESS_PHASE : FEATURE_NEW_PHASE;
+                feature.comment = feature.newPhase == FEATURE_INPROGRESS_PHASE ? "DoD Ruler decided that the Feature is moving to In Progress phase because at least one user story is in Progress phase" : "DoD Ruler decided that the Feature is In Progress phase because all User stories are in New phase"
+            } else {
+
+                feature.newPhase = feature.userStories.inNew == 0 ?  FEATURE_INPROGRESS_PHASE : FEATURE_NEW_PHASE;
+                feature.comment = feature.newPhase == FEATURE_INPROGRESS_PHASE ? "DoD Ruler decided that the Feature is moving to In Progress phase  because all  user stories in Progress" : "DoD Ruler decided that the Feature is in New phase because at least one User story is in New phase"
+
+            }
+        });
+    });
+
+
 }
 
 

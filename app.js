@@ -13,15 +13,15 @@ const WORKSPACE_ID = 2037;
 
 // create the cookie jar that is needed for authentication
 var requestor = request.defaults({
-    jar: true,
-    baseUrl: OCTANE_SERVER,
-    json: true,
-    // if running from within HPE you will need to set a proxy.  Change according to nearest proxy
-    //proxy: 'http://web-proxy.il.hpecorp.net:8080'
+  jar: true,
+  baseUrl: OCTANE_SERVER,
+  json: true,
+  // if running from within HPE you will need to set a proxy.  Change according to nearest proxy
+  //proxy: 'http://web-proxy.il.hpecorp.net:8080'
 });
 
 
-var DOD_LOGIC = 'Total_Stories == Done_Stories & Total_Defects == 0';
+var DOD_LOGIC = { doneLogic: 'Total_Stories == Done_Stories & Total_Defects == 0', progressLogic: 'any' };
 
 
 
@@ -31,7 +31,7 @@ var DOD_LOGIC = 'Total_Stories == Done_Stories & Total_Defects == 0';
  * @param callback The callback that will be called once login is successful
  * @returns {*}
  */
-function initFeatureDoD(requestor, userStoryId, callback) {
+function initFeatureDoD(requestor, userStoryId, isProgress, callback) {
 
   var HPSSO_COOKIE_CSRF = null;
 
@@ -45,8 +45,8 @@ function initFeatureDoD(requestor, userStoryId, callback) {
        * client_id: '', // put API KEY here
        * client_secret: '' // PUT API SECRET HERE
        */
-	  // client_id: 'Ruly_glxzd4wnj7r42aq423lgemv4j', // put API KEY here
-     //  client_secret: '-b04ebe67efbe882B' // PUT API SECRET HERE
+      // client_id: 'Ruly_glxzd4wnj7r42aq423lgemv4j', // put API KEY here
+      //  client_secret: '-b04ebe67efbe882B' // PUT API SECRET HERE
     }
   }, function (error, response) {
     if (error) {
@@ -73,12 +73,12 @@ function initFeatureDoD(requestor, userStoryId, callback) {
         'HPSSO-HEADER-CSRF': HPSSO_COOKIE_CSRF
       }
     });
-	
-	var featureDoD = featureDoDLib.featureDoD(requestor, callback, DOD_LOGIC);
-		
-    featureDoD.applyUserStoryDone(userStoryId);
 
-  });  
+    var featureDoD = featureDoDLib.featureDoD(requestor, callback, DOD_LOGIC);
+
+    isProgress ? featureDoD.applyUserStoryProgress(userStoryId) : featureDoD.applyUserStoryDone(userStoryId);
+
+  });
 }
 
 // Create application/x-www-form-urlencoded parser
@@ -86,7 +86,7 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 app.post('/setdodlogic', urlencodedParser, function (req, res) {
 
-  var dodLogic = req.body.dodLogic;
+  var dodLogic = { doneLogic: req.body.dodLogic, progressLogic: req.body.moveToInProgress };
 
   console.log(dodLogic);
 
@@ -98,44 +98,50 @@ app.post('/setdodlogic', urlencodedParser, function (req, res) {
 
 app.get('/dodtest', function (req, res) {
 
-  console.log(req.baseUrl);
-	
-	//console.log("Received User Story ID: "+req.query.userStoryId)
-  
-	initFeatureDoD(requestor, req.query.userStoryId, function(feature){
-		res.send(feature);
-	} );
-	
+  initFeatureDoD(requestor, req.query.userStoryId, false, function (feature) {
+    res.send(feature);
+  });
+
+});
+
+app.get('/progresstest', function (req, res) {
+
+  initFeatureDoD(requestor, req.query.userStoryId, true, function (feature) {
+    res.send(feature);
+  });
+
 });
 
 app.post('/dodcall', urlencodedParser, function (req, res) {
 
-  //console.log(req.baseUrl);
+  var workItemId = 3203;
+
+  console.log(req.body);
+
+  if (req.body.entityId) { var workItemId = req.body.entityId };
+
+  initFeatureDoD(requestor, workItemId, false, function (feature) {
+    res.send(feature);
+  });
+});
+
+app.post('/progresscall', urlencodedParser, function (req, res) {
 
   var workItemId = 3203;
 
   console.log(req.body);
-  
-  if (req.body.entityId){ var workItemId = req.body.entityId };
 
-  initFeatureDoD(requestor, workItemId, function(feature){
-		res.send(feature);
-	} );
-  
-	
-	
-	//console.log("Received User Story ID: "+req.query.userStoryId)
-  
-  /*
-	initFeatureDoD(requestor, req.query.userStoryId, function(feature){
-		res.send(feature);
-	} );
-  */
-	
+  if (req.body.entityId) { var workItemId = req.body.entityId };
+
+  initFeatureDoD(requestor, workItemId, true, function (feature) {
+    res.send(feature);
+  });
+
+
 });
 
 app.get('/dodsetting', function (req, res) {
-   res.sendFile( __dirname+'/OctaneDODSetting.html' );
+  res.sendFile(__dirname + '/OctaneDODSetting.html');
 })
 
 var server = app.listen(3333, function () {
