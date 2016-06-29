@@ -124,7 +124,7 @@ app.post('/dodcall',  function (req, res) {
     console.log(body);    
   });
 
-  request.on('end', function () {
+  req.on('end', function () {
 
     workItemId = JSON.parse(body).entityId;
 
