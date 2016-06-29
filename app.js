@@ -94,7 +94,7 @@ app.post('/setdodlogic', urlencodedParser, function (req, res) {
 
   DOD_LOGIC = dodLogic;
 
-  res.sendFile(__dirname + '/OctaneDODone.html');
+  res.sendFile(__dirname + '/OctaneDODDone.html');
 
 
 });

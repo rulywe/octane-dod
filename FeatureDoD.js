@@ -47,7 +47,7 @@ FeatureDoD.prototype.updateFeature = function(){
 
     var comment = {
         "data": [{
-            "author": { "id": 2009, "type": "workspace_user" },
+            "author": { "id": 3041, "type": "workspace_user" },
             "text": "<html><body>"+this.feature.comment+"</body></html>",
             "owner_work_item": { "id": this.feature.id, "type": "work_item" }
         }]
