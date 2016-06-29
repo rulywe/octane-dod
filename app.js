@@ -114,11 +114,13 @@ app.get('/progresstest', function (req, res) {
 
 app.post('/dodcall',  function (req, res) {
 
-  var body;
+  var body = "";
 
   var workItemId = 3203;
 
   req.on('data', function (data) {
+
+    
     body += data;
 
     console.log(body);    
