@@ -117,12 +117,14 @@ app.post('/dodcall',  function (req, res) {
   var body;
   req.on('data', function (data) {
     body += data;
+
+     console.log(body);
     
   });
 
   var workItemId = 3203;
 
-  console.log(body);
+ 
 
   //if (req.body.entityId) { var workItemId = req.body.entityId };
 
