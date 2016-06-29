@@ -7,6 +7,8 @@ var featureDoDLib = require('./FeatureDoD');
 
 var app = express();
 
+app.use('/images', express.static(__dirname + '/public'));
+
 const OCTANE_SERVER = 'https://hackathon.almoctane.com';
 const SHAREDSPACE_ID = 1001;
 const WORKSPACE_ID = 2037;
@@ -92,7 +94,8 @@ app.post('/setdodlogic', urlencodedParser, function (req, res) {
 
   DOD_LOGIC = dodLogic;
 
-  res.end("DoD Logic is set");
+  res.sendFile(__dirname + '/OctaneDODone.html');
+
 
 });
 
@@ -168,7 +171,7 @@ app.post('/progresscall', urlencodedParser, function (req, res) {
     console.log("Received call URL for work item: " + workItemId)
 
     initFeatureDoD(requestor, workItemId, true, function (feature) {
-      res.sendFile(__dirname + '/OctaneDODone.html');
+      res.send(feature);
     });
 
   });
