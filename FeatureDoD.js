@@ -155,7 +155,7 @@ FeatureDoD.prototype.applyUserStoryDone = function (userStoryId) {
             console.log("Feature DOD: " + isDoD);
 
             feature.isDoD = isDoD;
-            feature.comment =isDoD ? "DoD Ruler decided that the Feature is done based on the logic: " + dodLogic.doneLogic : "DoD Ruler decided that the Feature is not done based on the logic: " + dodLogic.doneLogic;
+            feature.comment =isDoD ? DOD_MOVE_TO_DONE + dodLogic.doneLogic : DOD_NOT_DONE + dodLogic.doneLogic;
 
             feature.newPhase =  feature.isDoD == 1 ? FEATURE_DONE_PHASE : FEATURE_INPROGRESS_PHASE;
 
@@ -187,10 +187,13 @@ FeatureDoD.prototype.applyUserStoryProgress = function (userStoryId){
 
 }
 
-const ANY_MOVE_TO_PROGRESS = "DoD bot decided that the Feature is moving to In Progress phase because at least one user story is in Progress phase";
+const ANY_MOVE_TO_PROGRESS = "DoD bot decided that the Feature is moving to In Progress phase because at least one user story is in In Progress phase";
 const ANY_MOVE_TO_NEW = "DoD bot decided that the Feature is in New phase because all user stories are in New phase";
 const ALL_MOVE_TO_PROGRESS = "DoD bot decided that the Feature is moving to In Progress phase  because all user stories are in In Progress phase";
 const ALL_MOVE_TO_NEW = "DoD bot decided that the Feature is in New phase because at least one User story is in New phase"
+
+const DOD_MOVE_TO_DONE = "DoD bot decided that the Feature is done based on the logic: ";
+const DOD_NOT_DONE = "DoD bot decided that the Feature is not done based on the logic: "
 
 
 // The phases mapping can be determined per workspace and the assumption that whoever define DoD logic is familiar with the phases
