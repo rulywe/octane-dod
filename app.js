@@ -115,22 +115,34 @@ app.get('/progresstest', function (req, res) {
 app.post('/dodcall',  function (req, res) {
 
   var body;
+
+  var workItemId = 3203;
+
   req.on('data', function (data) {
     body += data;
 
-     console.log(body);
-    
+    console.log(body);    
   });
 
-  var workItemId = 3203;
+  request.on('end', function () {
+
+    workItemId = JSON.parse(body).entityId;
+
+    console,log("Received call URL for work item: "+workItemId)
+
+    initFeatureDoD(requestor, workItemId, false, function (feature) {
+      res.send(feature);
+    });
+
+  });
+
+  
 
  
 
   //if (req.body.entityId) { var workItemId = req.body.entityId };
 
-  initFeatureDoD(requestor, workItemId, false, function (feature) {
-    res.send(feature);
-  });
+  
 });
 
 app.post('/progresscall', urlencodedParser, function (req, res) {
