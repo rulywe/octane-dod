@@ -175,11 +175,11 @@ FeatureDoD.prototype.applyUserStoryProgress = function (userStoryId){
             if ("any" == dodLogic.progressLogic){
 
                 feature.newPhase = feature.userStories.inProgress+feature.userStories.inTesting+feature.userStories.done > 0 ? FEATURE_INPROGRESS_PHASE : FEATURE_NEW_PHASE;
-                feature.comment = feature.newPhase == FEATURE_INPROGRESS_PHASE ? "DoD Ruler decided that the Feature is moving to In Progress phase because at least one user story is in Progress phase" : "DoD Ruler decided that the Feature is In Progress phase because all User stories are in New phase"
+                feature.comment = feature.newPhase == FEATURE_INPROGRESS_PHASE ? "DoD Ruler decided that the Feature is moving to In Progress phase because at least one user story is in Progress phase" : "DoD Ruler decided that the Feature is in New phase because all User stories are in New phase"
             } else {
 
                 feature.newPhase = feature.userStories.inNew == 0 ?  FEATURE_INPROGRESS_PHASE : FEATURE_NEW_PHASE;
-                feature.comment = feature.newPhase == FEATURE_INPROGRESS_PHASE ? "DoD Ruler decided that the Feature is moving to In Progress phase  because all  user stories in Progress" : "DoD Ruler decided that the Feature is in New phase because at least one User story is in New phase"
+                feature.comment = feature.newPhase == FEATURE_INPROGRESS_PHASE ? "DoD Ruler decided that the Feature is moving to In Progress phase  because all  user stories are in In Progress phase" : "DoD Ruler decided that the Feature is in New phase because at least one User story is in New phase"
 
             }
         });
